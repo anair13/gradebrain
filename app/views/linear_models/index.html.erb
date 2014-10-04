@@ -1,0 +1,31 @@
+<h1>Listing linear_models</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Class1</th>
+      <th>Class2</th>
+      <th>Model</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @linear_models.each do |linear_model| %>
+      <tr>
+        <td><%= linear_model.class1 %></td>
+        <td><%= linear_model.class2 %></td>
+        <td><%= linear_model.model %></td>
+        <td><%= link_to 'Show', linear_model %></td>
+        <td><%= link_to 'Edit', edit_linear_model_path(linear_model) %></td>
+        <td><%= link_to 'Destroy', linear_model, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Linear model', new_linear_model_path %>
