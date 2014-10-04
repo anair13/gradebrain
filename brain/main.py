@@ -25,7 +25,7 @@ def import_data():
 								person.append(temp)
 							
 					else:
-						raise 
+						raise "Invalid JSON!"
 				if len(person) > 0:
 					grades.append(person)
 	return grades
