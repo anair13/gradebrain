@@ -29,4 +29,3 @@ def import_data():
 				if len(person) > 0:
 					grades.append(person)
 	return grades
-print(import_data())

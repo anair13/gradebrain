@@ -1,0 +1,29 @@
+<%= form_for(@linear_model) do |f| %>
+  <% if @linear_model.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@linear_model.errors.count, "error") %> prohibited this linear_model from being saved:</h2>
+
+      <ul>
+      <% @linear_model.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :class1 %><br>
+    <%= f.text_field :class1 %>
+  </div>
+  <div class="field">
+    <%= f.label :class2 %><br>
+    <%= f.text_field :class2 %>
+  </div>
+  <div class="field">
+    <%= f.label :model %><br>
+    <%= f.text_field :model %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
