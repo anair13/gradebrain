@@ -127,6 +127,7 @@ DEPENDENCIES
   jbuilder (~> 1.0.1)
   jquery-rails
   mongo_mapper
+  multi_json
   passenger
   rails (= 4.0.0.rc1)
   sass-rails (~> 4.0.0.rc1)
