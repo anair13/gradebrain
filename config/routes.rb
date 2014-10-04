@@ -1,4 +1,6 @@
 Gradebrain::Application.routes.draw do
+  root :to => 'data#index'
+
   resources :data
 
   # The priority is based upon order of creation: first created -> highest priority.
