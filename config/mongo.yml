@@ -18,8 +18,9 @@ test:
 
 # set these environment variables on your prod server
 production:
+  <<: *defaults
   host: ds043350.mongolab.com
   port: 43350
-  database: gradebrain
-  username: <%= ENV['MONGO_USERNAME'] %>
-  password: <%= ENV['MONGO_PASSWORD'] %>
+  database: gradebraindb
+  username: 
+  password: 
