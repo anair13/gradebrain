@@ -1,0 +1,25 @@
+defaults: &defaults
+  host: 127.0.0.1
+  port: 27017
+  options:
+    w: 1
+    pool_size: 1
+    slave_ok: false
+    ssl: false
+
+development:
+  <<: *defaults
+  database: gradebrain_development
+
+test:
+  <<: *defaults
+  database: gradebrain_test
+  w: 0
+
+# set these environment variables on your prod server
+production:
+  host: ds043350.mongolab.com
+  port: 43350
+  database: gradebrain
+  username: <%= ENV['MONGO_USERNAME'] %>
+  password: <%= ENV['MONGO_PASSWORD'] %>
