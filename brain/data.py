@@ -12,3 +12,11 @@ def simple_lr(samples):
     b = bnum / bdenom
     a = avgy - b * avgx
     return (b, a)
+
+def thing(saavan):
+    """ Takes Saavan's output and returns a list of linear coefficients
+
+    saavan -- thing
+    Returns [(b, a)]
+    """
+    
