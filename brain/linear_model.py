@@ -3,12 +3,11 @@ def import_data(data):
     x = data.find()
     grades = []
     for x in data.find():
-        it = iter(x)
+        person = []
         if 'semesters' in x['academics']:
             for y in x["academics"]["semesters"]:
                 if type(y) == dict:
                     if "classes" in y:
-                        person = []
                         for course in y["classes"]:
                             if(course["transcript"]):
                                 temp = { "class" : course["course_code"]}
@@ -17,8 +16,8 @@ def import_data(data):
                             
                     else:
                         raise "Invalid JSON!"
-                if len(person) > 0:
-                    grades.append(person)
+        if len(person) > 0:
+            grades.append(person)
     return grades
 
 def simple_lr(samples):
