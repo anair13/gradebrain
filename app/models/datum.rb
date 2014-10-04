@@ -1,6 +1,6 @@
-class User
+class Datum
   include MongoMapper::Document
 
-  key :name, String
+  key :academics, Hash
 
 end
