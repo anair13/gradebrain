@@ -11,13 +11,15 @@
   </thead>
 
   <tbody>
-    <% @data.each do |datum| %>
-      <tr>
-        <td><%= datum.academics %></td>
-        <td><%= link_to 'Show', datum %></td>
-        <td><%= link_to 'Edit', edit_datum_path(datum) %></td>
-        <td><%= link_to 'Destroy', datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+    <% if @data %>
+      <% @data.each do |datum| %>
+        <tr>
+          <td><%= datum.academics %></td>
+          <td><%= link_to 'Show', datum %></td>
+          <td><%= link_to 'Edit', edit_datum_path(datum) %></td>
+          <td><%= link_to 'Destroy', datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
