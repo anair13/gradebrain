@@ -77,7 +77,7 @@ def get_lr_classes(data, class1, class2):
     """
     return simple_lr(get_lr_samples(data, class1, class2))
 
-def get_multivar_lr(data, class1):
+def get_multivar_lr(data, courses, class1):
     """ Takes a class string and returns the linear regression coefficients
     for that class based on performance in ALL classes.
 
@@ -86,7 +86,6 @@ def get_multivar_lr(data, class1):
     class 1 -- string
     """
     gradeData = data[1]
-    courses = list(set(map(lambda x: x["class"], reduce(add, data[0]))))
     courses.insert(0, "bias")
     all_class_grades = []
     class1_grades = []
@@ -101,4 +100,4 @@ def get_multivar_lr(data, class1):
         coeffs = multivariate_lr(all_class_grades, class1_grades)
         return dict(zip(courses, coeffs))
     else:
-        raise "We don't have enough data to make a conclusion!"
+        raise NotEnoughDataException("We don't have enough data to make a conclusion!")

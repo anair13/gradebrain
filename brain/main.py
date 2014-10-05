@@ -14,14 +14,14 @@ data = client.gradebraindb.data
 models = client.gradebraindb.linear_models
 #models = local_client.gradebrain_development.linear_models
 
-""" 
+"""
 Write model to the db.gradebraindb.data mongo collection
 class1, class2 are the course code strings, class1 < class2
 linear_model is (b,a) for f = bx + a
 """
-"""
 dataset, gradeset = import_data(data)
 classes = list(set(reduce(add,map(lambda x: x.keys(), gradeset))))
+print(classes)
 
 for class1 in classes:
     for class2 in classes:
@@ -39,20 +39,15 @@ for class1 in classes:
                 model = {"class1": class1, "class2": class2, "model": {"histogram": hist}}
             models.remove({"class1": class1, "class2": class2})
             models.insert(model)
-"""
 
-from pymongo import MongoClient
-from linear_model import *
-from internal import *
-from operator import add
-from stats import *
-import os
-
-#local_client = MongoClient()
-client = MongoClient('ds043350.mongolab.com', 43350)
-client.gradebraindb.authenticate(
-    os.environ["MONGO_USERNAME"],
-    os.environ["MONGO_PASSWORD"],)
-data = client.gradebraindb.data
-data = import_data(data)
-print get_multivar_lr(data, "CHINESE 10")
+# multivariate regression
+for clazz in classes:
+    print(clazz)
+    try:
+        coeffs = get_multivar_lr((dataset, gradeset), classes[:], clazz)
+        model = {"class1": clazz, "class2": "x", "model": coeffs}
+        models.remove({"class1": clazz, "class2": ""})
+        models.remove({"class1": clazz, "class2": "x"})
+        models.insert(model)
+    except NotEnoughDataException:
+        pass
