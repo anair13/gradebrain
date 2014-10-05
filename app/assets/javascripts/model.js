@@ -1,7 +1,15 @@
+
 function updateLinearModel(past_class, future_class, past_grade) {
+    alert("testtest");
     return $.getJSON('/models/' + past_class + '/' + future_class, function(data) {
-        console.log(data.histogram[past_grade]);
-        // do some stuff to modify the page based on the model
+	var grades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"];
+	var gradehist = [];
+	for (var i = 0; i < grades.length; i++) {
+        	console.log("i");
+		gradehist.push(data.histogram[past_grade][grades[i]]);
+	}
+        console.log(gradehist);
+	histogram(gradehist);
     });
 }
 

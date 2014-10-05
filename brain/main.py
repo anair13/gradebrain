@@ -28,8 +28,6 @@ for class1 in classes:
         print(class1, class2)
         if class1 != class2:
             hist = histogram(gradeset, class1, class2)
-            if (class1 == "COMPSCI 61A" and class2 == "COMPSCI 61B"):
-                print(hist)
             try:
                 lm = get_lr_classes(dataset, class1, class2)
                 se = stdev(get_lr_samples(dataset, class1, class2))
