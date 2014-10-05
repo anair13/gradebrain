@@ -11,7 +11,9 @@ function updateHistogram(past_class, future_class, past_grade) {
         	var gradehist = [];
         	for (var i = 0; i < grades.length; i++) {
                 console.log(data.histogram);
-        		gradehist.push(data.histogram[past_grade][grades[i]]);
+        		for (var j = 0; j < data.histogram[past_grade][grades[i]]; j++) {
+                    gradehist.push(i);
+                }
         	}
             console.log(gradehist);
         	histogram(gradehist);
@@ -26,20 +28,23 @@ function histogram(values) {
     // A formatter for counts.
     d3.select("svg").remove();
     
+    // A formatter for counts.
     var formatCount = d3.format(",.0f");
 
     var margin = {top: 10, right: 30, bottom: 30, left: 30},
         width = 960 - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
+        height = 500 - margin.top - margin.bottom;
 
     var x = d3.scale.linear()
-        .domain([-.5, 11.5])
+        .domain([0, 12])
         .range([0, width]);
 
-    // Generate a histogram using 12 uniformly-spaced bins.
+    // Generate a histogram using twenty uniformly-spaced bins.
     var data = d3.layout.histogram()
         .bins(x.ticks(12))
         (values);
+
+    console.log(data)
 
     var y = d3.scale.linear()
         .domain([0, d3.max(data, function(d) { return d.y; })])
@@ -64,13 +69,15 @@ function histogram(values) {
     bar.append("rect")
         .attr("x", 1)
         .attr("width", x(data[0].dx) - 1)
-        .attr("height", function(d) { return height - y(d.y); });
+        .attr("height", function(d) { return height - y(d.y); })
+        .attr("fill");
 
     bar.append("text")
         .attr("dy", ".75em")
         .attr("y", 6)
         .attr("x", x(data[0].dx) / 2)
         .attr("text-anchor", "middle")
+        .attr("fill", "blue")
         .text(function(d) { return formatCount(d.y); });
 
     svg.append("g")
