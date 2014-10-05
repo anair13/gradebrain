@@ -1,15 +1,24 @@
+var grades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"];
 
-function updateLinearModel(past_class, future_class, past_grade) {
-    alert("testtest");
+function saveCookie(data) {
+	// I promise this works
+	document.cookie = "grades=" + [].concat.apply([], data.semesters.map(function (x) { return x["classes"]; })).filter(function (x) { return x["transcript"] != null; }).map(function (x) { var a = {}; a[x.course_code] = x.transcript[0].grade; return a; } ).reduce(function (a, b) { return $.extend(a, b); } );
+}
+
+function updateHistogram(past_class, future_class, past_grade) {
     return $.getJSON('/models/' + past_class + '/' + future_class, function(data) {
-	var grades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"];
-	var gradehist = [];
-	for (var i = 0; i < grades.length; i++) {
-        	console.log("i");
-		gradehist.push(data.histogram[past_grade][grades[i]]);
-	}
-        console.log(gradehist);
-	histogram(gradehist);
+        if (!jQuery.isEmptyObject(data)) {
+        	var gradehist = [];
+        	for (var i = 0; i < grades.length; i++) {
+                console.log(data.histogram);
+        		gradehist.push(data.histogram[past_grade][grades[i]]);
+        	}
+            console.log(gradehist);
+        	histogram(gradehist);
+        }
+        else {
+            console.log("not enough data");
+        }
     });
 }
 
@@ -21,15 +30,15 @@ function histogram(values) {
 
     var margin = {top: 10, right: 30, bottom: 30, left: 30},
         width = 960 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+        height = 300 - margin.top - margin.bottom;
 
     var x = d3.scale.linear()
-        .domain([0, 1])
+        .domain([-.5, 11.5])
         .range([0, width]);
 
-    // Generate a histogram using twenty uniformly-spaced bins.
+    // Generate a histogram using 12 uniformly-spaced bins.
     var data = d3.layout.histogram()
-        .bins(x.ticks(20))
+        .bins(x.ticks(12))
         (values);
 
     var y = d3.scale.linear()
@@ -40,7 +49,7 @@ function histogram(values) {
         .scale(x)
         .orient("bottom");
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#canvas").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
@@ -68,4 +77,38 @@ function histogram(values) {
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
+}
+
+function myClasses() {
+    var select = document.getElementById("select1");
+    return $.getJSON('/courses.json', function(data) {
+        for (var i = 0; i < data.length; i++) {
+            var opt = data[i].name;
+            var el = document.createElement("option");
+            el.textContent = opt;
+            el.value = opt;
+            select.appendChild(el);
+            console.log(data[i].name);
+        }
+    });
+}
+
+function allClasses() {
+    var select = document.getElementById("select2");
+    return $.getJSON('/courses.json', function(data) {
+        for (var i = 0; i < data.length; i++) {
+            var opt = data[i].name;
+            var el = document.createElement("option");
+            el.textContent = opt;
+            el.value = opt;
+            select.appendChild(el);
+            console.log(data[i].name);
+        }
+    });
+}
+
+function draw() {
+    var class1 = $("#select1 option:selected").text();
+    var class2 = $("#select2 option:selected").text();
+    updateHistogram(class1, class2, "A-")
 }

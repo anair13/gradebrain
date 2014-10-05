@@ -1,4 +1,6 @@
 Gradebrain::Application.routes.draw do
+  resources :courses
+
   resources :linear_models
   get '/models/:class1/:class2', to: 'linear_models#get_model'
   get '/predict', to: 'linear_models#index'

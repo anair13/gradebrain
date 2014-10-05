@@ -14,7 +14,11 @@ class LinearModelsController < ApplicationController
 
   def get_model
     @linear_model = LinearModel.find_by_class1_and_class2(params[:class1], params[:class2])
-    render :json => @linear_model.model
+    if @linear_model
+      render :json => @linear_model.model
+    else
+      render :json => {}
+    end
   end
 
   # GET /linear_models/new
