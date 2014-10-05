@@ -240,6 +240,30 @@ th {
     font-size: 72pt;
 }
 
+th.no-color {
+    background-color: transparent;
+    height: 200px;
+    margin: 0px;
+    padding: 0px;
+}
+
+th.bar-container {
+    vertical-align: bottom;
+}
+
+div.bar {
+    margin: 0px;
+    padding: 0px;
+    background-color: #EAB8E0;
+    border: 1px solid red;
+}
+
+div.third-width {
+    width: 32%;
+    position: relative;
+    float: left;
+}
+
 td {
     background-color: #FFF;
     font-size: 48pt;

@@ -23,7 +23,34 @@ function updateHistogram(past_class, future_class, past_grade) {
 }
 
 function histogram(values) {
+    // Normalize
+    var total = 0;
+    $.each(values,function() {
+        total += this;
+    });
+
+    var bar_height = 300;
+    $("#barAp").height((values[0] / total * bar_height) + "%");
+    $("#barA").height((values[1] / total * bar_height) + "%");
+    $("#barAm").height((values[2] / total * bar_height) + "%");
+    $("#barBp").height((values[3] / total * bar_height) + "%");
+    $("#barB").height((values[4] / total * bar_height) + "%");
+    $("#barBm").height((values[5] / total * bar_height) + "%");
+    $("#barCp").height((values[6] / total * bar_height) + "%");
+    $("#barC").height((values[7] / total * bar_height) + "%");
+    $("#barCm").height((values[8] / total * bar_height) + "%");
+    $("#barDp").height((values[9] / total * bar_height) + "%");
+    $("#barD").height((values[10] / total * bar_height) + "%");
+    $("#barDm").height((values[11] / total * bar_height) + "%");
+    $("#barF").height((values[12] / total * bar_height) + "%");
+
+    $("#percentA").text(Math.round((values[0] + values[1] + values[2]) * 100 / total) + "%");
+    $("#percentB").text(Math.round((values[3] + values[4] + values[5]) * 100 / total) + "%");
+    $("#percentC").text(Math.round((values[6] + values[7] + values[8]) * 100 / total) + "%");
+    $("#percentD").text(Math.round((values[10] + values[11] + values[12]) * 100 / total) + "%");
+    $("#percentF").text(Math.round(values[12] * 100 / total) + "%");
     // A formatter for counts.
+    /*
     d3.select("svg").remove();
     
     var formatCount = d3.format(",.0f");
@@ -77,6 +104,7 @@ function histogram(values) {
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
+    */
 }
 
 function myClasses() {

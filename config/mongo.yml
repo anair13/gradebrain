@@ -22,5 +22,5 @@ production:
   host: ds043350.mongolab.com
   port: 43350
   database: gradebraindb
-  username: 
-  password: 
+  username: gradebrain
+  password: calhacks2014
