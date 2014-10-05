@@ -27,9 +27,9 @@ for class1 in classes:
                 lm = get_lr_classes(dataset, class1, class2)
                 hist = histogram(dataset, "COMPSCI 61A", "COMPSCI 61B")
                 model = {"class1": class1, "class2": class2,
-                    "model": {"t0": lm[1], "t1": lm[0]}, "histogram": hist}
+                    "model": {"t0": lm[1], "t1": lm[0], "histogram": hist}}
             except NotEnoughDataException:
                 hist = histogram(dataset, "COMPSCI 61A", "COMPSCI 61B")
-                model = {"class1": class1, "class2": class2, "histogram": hist}
+                model = {"class1": class1, "class2": class2, "model": {"histogram": hist}}
             models.remove({"class1": class1, "class2": class2})
             models.insert(model)
