@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require d3
+//= require model
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
