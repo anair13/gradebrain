@@ -1,31 +1,36 @@
-<h1>Listing linear_models</h1>
-
+<div id='background-container'>
+  <%= image_tag("cal.jpg", :id => 'background-img') %>
+</div>
+<div id='background-overlay2'>
+</div>
+<div id = "landingwrap">
+  <div id ="chooseclasses">
+    <h1 class = "title" id = "uppercase">Please choose classes</h1>
+    <h2 class = "subtitle">Select a class you have taken, and a class you would like to received predictions for:</h2>
+    <!--INSERT DROPDOWNS HERE -->
+  </div>
+</div>
+<!-- CONTENT -->
+<div id = "learnmore">
+<center>
+Cardigan whatever iPhone Truffaut. Hoodie organic ugh, meggings aesthetic freegan dreamcatcher hashtag brunch Odd Future mustache Wes Anderson leggings. Pinterest swag kogi, meh trust fund viral art party pour-over Marfa distillery hella slow-carb bicycle rights chambray single-origin coffee. Lo-fi yr gentrify, messenger bag Tonx kale chips roof party bicycle rights heirloom leggings locavore.
+<br />
+<br />
 <table>
-  <thead>
-    <tr>
-      <th>Class1</th>
-      <th>Class2</th>
-      <th>Model</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @linear_models.each do |linear_model| %>
-      <tr>
-        <td><%= linear_model.class1 %></td>
-        <td><%= linear_model.class2 %></td>
-        <td><%= linear_model.model %></td>
-        <td><%= link_to 'Show', linear_model %></td>
-        <td><%= link_to 'Edit', edit_linear_model_path(linear_model) %></td>
-        <td><%= link_to 'Destroy', linear_model, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
+  <tr>
+  <th> F </th> <th> D </th> <th> C </th> <th> B </th> <th> A </th>
+  </tr>
+<tr>
+  <td> 10% </td> <td> 10% </td> <td> 20% </td> <td> 30% </td ><td> 30% </td>
+</tr>
 </table>
-
-<br>
-
-<%= link_to 'New Linear model', new_linear_model_path %>
+<!-- INSERT HISTOGRAM HERE -->
+<!-- INSERT OPTION TO GENERATE ANOTHER DISTRIBUTION HERE -->
+</center>
+</div>
+<!-- FOOTER -->
+<div id = "footer">
+  <div id = "copyright">
+    Made by Ashvin Nair, Saavan Patel, Angira Shirahatti, Jason Tu & Roy Tu for CalHacks,  2014
+  </div>
+</div>

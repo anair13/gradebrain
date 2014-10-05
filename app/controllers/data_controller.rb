@@ -29,11 +29,11 @@ class DataController < ApplicationController
     respond_to do |format|
       begin
         if @datum.save
-          format.html { redirect_to @datum, notice: 'Datum was successfully created.' }
-          format.json { render action: 'show', status: :created, location: @datum }
+          format.html { redirect_to "/predict" }
+          format.json { redirect_to action: 'index' }
         else
-          format.html { render action: 'new' }
-          format.json { render json: @datum.errors, status: :unprocessable_entity }
+          format.html { redirect_to "/predict" }
+          format.json { redirect_to action: 'index' }
         end
       rescue
           @datum.errors.add("Your", "academic information is already reported")
