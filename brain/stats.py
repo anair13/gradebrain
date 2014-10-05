@@ -4,6 +4,7 @@ import numpy
 from sklearn import linear_model
 
 from math import sqrt
+from operator import add, sub
 
 def covariance(samples):
     """ Gets the covariance of grades """
@@ -42,7 +43,8 @@ def simple_lr(samples):
     return (b, a)
 
 def multivariate_lr(x, y):
-    """Returns linear regression coefficients (a0, a1, a2, x3 ... an)
+    """Returns linear regression coefficients (a0, a1, a2, x3 ... an) and standard deviation
+        in the form [*coeffs, stdev]
         where y = a0 + a1*x1 + a2*x2 + a3*x3 ... an * xn
         x :: [[x1, x2, x3 ... xn], ... [xk]]
         y :: [y0, y1 ... yk]
@@ -54,6 +56,18 @@ def multivariate_lr(x, y):
     coeff = []
     coeff.append(clf.intercept_)
     coeff += list(clf.coef_)
+    stdev = 0;
+    for ins, outs in zip(x,y):
+        val = 0
+        for i, test in enumerate(ins):
+            if i == 0:
+                val += coeff[0]
+            else:
+                val += coeff[i] * ins[i-1]
+        stdev += (val - outs)**2
+    stdev = float(stdev) / len(x)
+    stdev = sqrt(stdev)
+    coeff.append(stdev)
     return coeff
 
 
