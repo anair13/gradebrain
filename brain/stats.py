@@ -15,7 +15,11 @@ def variance(samples):
     """ Gets the variance of y of x """
     xs, ys = list(map(lambda a: a[0], samples)), list(map(lambda a: a[1], samples))
     b, a = simple_lr(samples)
-    return sqrt(sum([(ys[i] - (xs[i] * b + a)) ** 2 for i in range(len(samples))]) / len(samples))
+    return sum([(ys[i] - (xs[i] * b + a)) ** 2 for i in range(len(samples))]) / len(samples)
+
+def stdev(samples):
+    """ Gets the standard deviation of y of x """
+    return sqrt(variance(samples))
 
 def simple_lr(samples):
     """Returns linear regression coefficients (b, a) where f = bx + a
