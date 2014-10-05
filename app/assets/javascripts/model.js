@@ -1,8 +1,19 @@
 var grades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"];
 
-function saveCookie(data) {
+function saveCookie() {
 	// I promise this works
-	document.cookie = "grades=" + [].concat.apply([], data.semesters.map(function (x) { return x["classes"]; })).filter(function (x) { return x["transcript"] != null; }).map(function (x) { var a = {}; a[x.course_code] = x.transcript[0].grade; return a; } ).reduce(function (a, b) { return $.extend(a, b); } );
+    data = jQuery.parseJSON($('#jsoninput').val());
+	putCookie([].concat.apply([], data.semesters.map(function (x) { return x["classes"]; })).filter(function (x) { return x["transcript"] != null; }).map(function (x) { var a = {}; a[x.course_code] = x.transcript[0].grade; return a; } ).reduce(function (a, b) { return $.extend(a, b); } ));
+    stop();
+}
+
+function putCookie(thing) {
+    document.cookie = "grades=" + thing
+}
+
+function getCookie() {
+  match = document.cookie.match(new RegExp('grades=([^;]+)'));
+  if (match) return match[1];
 }
 
 function updateHistogram(past_class, future_class, past_grade) {
@@ -60,8 +71,9 @@ function histogram(values) {
     $("#percentC").text(Math.round(norm(values[6] + values[7] + values[8])) + "%");
     $("#percentD").text(Math.round(norm(values[10] + values[11] + values[12])) + "%");
     $("#percentF").text(Math.round(norm(values[12]))+ "%");
-    // A formatter for counts.
+
     /*
+    // A formatter for counts.
     d3.select("svg").remove();
     
     // A formatter for counts.
@@ -120,7 +132,7 @@ function histogram(values) {
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
-    */
+	*/
 }
 
 function myClasses() {
@@ -155,4 +167,9 @@ function draw() {
     var class1 = $("#select1 option:selected").text();
     var class2 = $("#select2 option:selected").text();
     updateHistogram(class1, class2, "A-")
+}
+
+function moveSelects() {
+    $("#select1").appendTo("#newselectlocation");
+    $("#select2").appendTo("#newselectlocation");
 }
