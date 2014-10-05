@@ -32,12 +32,12 @@ class DataController < ApplicationController
           format.html { redirect_to "/predict" }
           format.json { redirect_to action: 'index' }
         else
-          format.html { redirect_to "/predict" }
+          format.html { redirect_to "/linear_models" }
           format.json { redirect_to action: 'index' }
         end
       rescue
           @datum.errors.add("Your", "academic information is already reported")
-          format.html { redirect_to action: 'index' }
+          format.html { redirect_to "/linear_models" }
       end
     end
   end
