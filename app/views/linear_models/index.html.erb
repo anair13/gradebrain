@@ -3,11 +3,14 @@
 </div>
 <div id='background-overlay2'>
 </div>
-<div id = "landingwrap">
+<div id = "landingwrap" myClasses()>
   <div id ="chooseclasses">
     <h1 class = "title" id = "uppercase">Please choose classes</h1>
     <h2 class = "subtitle">Select a class you have taken, and a class you would like to received predictions for:</h2>
-    <!--INSERT DROPDOWNS HERE -->
+    <select id="select1" onchange="draw()">
+    </select>
+    <select id="select2" onchange="draw()">
+    </select>
   </div>
 </div>
 <!-- CONTENT -->
@@ -25,7 +28,7 @@ Cardigan whatever iPhone Truffaut. Hoodie organic ugh, meggings aesthetic freega
 </tr>
 </table>
   <div id="canvas">
-    
+
   </div>
 </center>
 </div>
@@ -35,3 +38,7 @@ Cardigan whatever iPhone Truffaut. Hoodie organic ugh, meggings aesthetic freega
     Made by Ashvin Nair, Saavan Patel, Angira Shirahatti, Jason Tu & Roy Tu for CalHacks,  2014
   </div>
 </div>
+
+<script type="text/javascript">
+   myClasses(); allClasses();
+</script>
