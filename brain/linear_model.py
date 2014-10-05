@@ -4,7 +4,7 @@ from operator import add
 
 def import_data(data):
     """Import from the db.gradebraindb.data mongo collection"""
-    x = data.find()
+    #x = data.find()
     grades = []
     gradeset = []
     for x in data.find():
