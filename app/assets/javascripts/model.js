@@ -166,7 +166,7 @@ function allClasses() {
 function draw() {
     var class1 = $("#select1 option:selected").text();
     var class2 = $("#select2 option:selected").text();
-    updateHistogram(class1, class2, "A-")
+    updateHistogram(class1, class2, $.parseJSON(getCookie())[class1]);
 }
 
 function moveSelects() {
