@@ -1,5 +1,5 @@
 from internal import NotEnoughDataException, grades, grade
-from stats import covariance, simple_lr
+from stats import covariance, simple_lr, multivariate_lr
 
 def import_data(data):
     """Import from the db.gradebraindb.data mongo collection"""
@@ -70,3 +70,24 @@ def get_lr_classes(data, class1, class2):
     Returns (b, a)
     """
     return simple_lr(get_lr_samples(data, class1, class2))
+
+def get_multivar_lr(data, class1):
+    """ Takes a class string and returns the linear regression coefficients
+    for that class based on performance in ALL classes.
+
+    throws an expception for invalid data
+    data -- mongo GRADE data, NOT anything else
+    class 1 -- string
+    """
+    courses = list(set(map(lambda x: x["class"], reduce(add, data))))
+    all_class_grades = []
+    class1_grades = []
+    for student in data:
+        student_grades = [0] * len(courses)
+        if class1 in student:
+            for course in student.keys():
+                student_grades[courses.index(course)] = grade(student[course])
+            class1_grades.append(grade(student[class1]))
+            all_class_grades.append(student_grades)
+    return multivariate_lr(all_class_grades, class1_grades)
+
