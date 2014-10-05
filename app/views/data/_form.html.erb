@@ -1,7 +1,7 @@
-<%= form_for(@datum) do |f| %>
+<%= form_for(@datum, :html => { :onsubmit => 'saveCookie();' }) do |f| %>
 
   <div class="field">
-    <%= f.text_field :input %>
+    <%= f.text_field :input, :id => "jsoninput" %>
   </div>
   <div class="actions">
     <%= f.submit "Alright, show me my future" %>

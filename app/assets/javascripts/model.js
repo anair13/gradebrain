@@ -14,9 +14,20 @@ var gradeValues = ["A+" : 100
               , "F" : 50
            ]
 
-function saveCookie(data) {
+function saveCookie() {
 	// I promise this works
-	document.cookie = "grades=" + [].concat.apply([], data.semesters.map(function (x) { return x["classes"]; })).filter(function (x) { return x["transcript"] != null; }).map(function (x) { var a = {}; a[x.course_code] = x.transcript[0].grade; return a; } ).reduce(function (a, b) { return $.extend(a, b); } );
+    data = jQuery.parseJSON($('#jsoninput').val());
+	putCookie(JSON.stringify([].concat.apply([], data.semesters.map(function (x) { return x["classes"]; })).filter(function (x) { return x["transcript"] != null; }).map(function (x) { var a = {}; a[x.course_code] = x.transcript[0].grade; return a; } ).reduce(function (a, b) { return $.extend(a, b); } )));
+    stop();
+}
+
+function putCookie(thing) {
+    document.cookie = "grades=" + thing
+}
+
+function getCookie() {
+  match = document.cookie.match(new RegExp('grades=([^;]+)'));
+  if (match) return match[1];
 }
 
 function updateMultivarLr(target_class) {
@@ -48,12 +59,13 @@ function updateHistogram(past_class, future_class, past_grade) {
         if (!jQuery.isEmptyObject(data)) {
         	var gradehist = [];
         	for (var i = 0; i < grades.length; i++) {
-                console.log(data.histogram);
-        		for (var j = 0; j < data.histogram[past_grade][grades[i]]; j++) {
-                    gradehist.push(i);
-                }
+                //console.log(data.histogram);
+			gradehist.push(data.histogram[past_grade][grades[i]]);
+        		//for (var j = 0; j < data.histogram[past_grade][grades[i]]; j++) {
+                    //gradehist.push(i);
+                //}
         	}
-            console.log(gradehist);
+            //console.log(gradehist);
         	histogram(gradehist);
         }
         else {
@@ -69,7 +81,7 @@ function histogram(values) {
         total += this;
     });
 
-    var bar_height = 300;
+    var bar_height = 100;
     $("#barAp").height((values[0] / total * bar_height) + "%");
     $("#barA").height((values[1] / total * bar_height) + "%");
     $("#barAm").height((values[2] / total * bar_height) + "%");
@@ -84,13 +96,22 @@ function histogram(values) {
     $("#barDm").height((values[11] / total * bar_height) + "%");
     $("#barF").height((values[12] / total * bar_height) + "%");
 
-    $("#percentA").text(Math.round((values[0] + values[1] + values[2]) * 100 / total) + "%");
-    $("#percentB").text(Math.round((values[3] + values[4] + values[5]) * 100 / total) + "%");
-    $("#percentC").text(Math.round((values[6] + values[7] + values[8]) * 100 / total) + "%");
-    $("#percentD").text(Math.round((values[10] + values[11] + values[12]) * 100 / total) + "%");
-    $("#percentF").text(Math.round(values[12] * 100 / total) + "%");
-    // A formatter for counts.
+    var norm = function (value) {
+        if (total == 0) {
+            return 0;
+        } else {
+            return value * 100 / total;
+	}
+    };
+
+    $("#percentA").text(Math.round(norm(values[0] + values[1] + values[2])) + "%");
+    $("#percentB").text(Math.round(norm(values[3] + values[4] + values[5])) + "%");
+    $("#percentC").text(Math.round(norm(values[6] + values[7] + values[8])) + "%");
+    $("#percentD").text(Math.round(norm(values[10] + values[11] + values[12])) + "%");
+    $("#percentF").text(Math.round(norm(values[12]))+ "%");
+
     /*
+    // A formatter for counts.
     d3.select("svg").remove();
     
     // A formatter for counts.
@@ -149,7 +170,7 @@ function histogram(values) {
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
-    */
+	*/
 }
 
 function myClasses() {
@@ -184,4 +205,9 @@ function draw() {
     var class1 = $("#select1 option:selected").text();
     var class2 = $("#select2 option:selected").text();
     updateHistogram(class1, class2, "A-")
+}
+
+function moveSelects() {
+    $("#select1").appendTo("#newselectlocation");
+    $("#select2").appendTo("#newselectlocation");
 }
