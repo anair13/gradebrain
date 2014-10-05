@@ -1,3 +1,7 @@
+function saveCookie(data) {
+	// I promise this works
+	document.cookie = "grades=" + [].concat.apply([], data.semesters.map(function (x) { return x["classes"]; })).filter(function (x) { return x["transcript"] != null; }).map(function (x) { var a = {}; a[x.course_code] = x.transcript[0].grade; return a; } ).reduce(function (a, b) { return $.extend(a, b); } );
+}
 
 function updateLinearModel(past_class, future_class, past_grade) {
     return $.getJSON('/models/' + past_class + '/' + future_class, function(data) {
