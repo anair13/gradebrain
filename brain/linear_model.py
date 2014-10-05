@@ -75,26 +75,29 @@ def get_lr_classes(data, class1, class2):
     return simple_lr(get_lr_samples(data, class1, class2))
 
 def get_multivar_lr(data, courses, class1):
-    """ Takes a class string and returns the linear regression coefficients
+    """ Takes a class string and returns the linear regression coefficients and stdev
     for that class based on performance in ALL classes.
 
+    return -- (coeefs, stdev)
     throws an expception for invalid data
     data -- mongo GRADE data, NOT anything else
     class 1 -- string
     """
     gradeData = data[1]
-    courses.insert(0, "bias")
+    
     all_class_grades = []
     class1_grades = []
     for student in gradeData:
-        student_grades = [0] * len(courses)
+        student_grades = [0] * (len(courses))
         if class1 in student:
             for course in student.keys():
                 student_grades[courses.index(course)] = grade(student[course])
             class1_grades.append(grade(student[class1]))
             all_class_grades.append(student_grades)
     if len(all_class_grades) != 0 and len(class1_grades) != 0:
-        coeffs = multivariate_lr(all_class_grades, class1_grades)
+        coeffs= multivariate_lr(all_class_grades, class1_grades)
+        courses.insert(0, "bias")
+        courses.append("stdev")
         return dict(zip(courses, coeffs))
     else:
         raise NotEnoughDataException("We don't have enough data to make a conclusion!")

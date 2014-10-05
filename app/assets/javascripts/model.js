@@ -1,4 +1,18 @@
 var grades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"];
+var gradeValues = ["A+" : 100
+              , "A" : 95
+              , "A-" : 90
+              , "B+" : 88
+              , "B" : 85
+              , "B-" : 80
+              , "C+" : 78
+              , "C" : 75
+              , "C-" : 70
+              , "D+" : 68
+              , "D" : 65
+              , "D-" : 60
+              , "F" : 50
+           ]
 
 function saveCookie() {
 	// I promise this works
@@ -15,6 +29,30 @@ function getCookie() {
   match = document.cookie.match(new RegExp('grades=([^;]+)'));
   if (match) return match[1];
 }
+
+function updateMultivarLr(target_class) {
+    var user_classes = getCookie()
+    return $.getJSON('/models/' + target_class + '/x', function(data) {
+        var all_classes = keys(data);
+        var stdev = data.stdev;
+        var bias = data.bias;
+        var grade = 0;
+        all_classes = all_classes.sort();
+        user_class_list = keys(user_classes).sort();
+        var value = 0;
+        for(var i = 0; i < user_class_list.length; i++) {
+            for(var j = 0; j < all_classes.length; i++) {
+                if(user_classes[i] == all_classes[j]) {
+                    value += data[all_classes[j]] * gradeValues[user_classes[user_class_list[i]]];
+                }
+            }
+        }
+        value += bias;
+        console.log(value);
+    
+    })
+}
+
 
 function updateHistogram(past_class, future_class, past_grade) {
     return $.getJSON('/models/' + past_class + '/' + future_class, function(data) {
