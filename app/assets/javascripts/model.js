@@ -1,5 +1,5 @@
 var grades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"];
-var gradeValues = ["A+" : 100
+var gradeValues = {"A+" : 100
               , "A" : 95
               , "A-" : 90
               , "B+" : 88
@@ -12,11 +12,11 @@ var gradeValues = ["A+" : 100
               , "D" : 65
               , "D-" : 60
               , "F" : 50
-           ]
+           };
 
 function saveCookie() {
 	// I promise this works
-    data = jQuery.parseJSON($('#jsoninput').val());
+    var data = jQuery.parseJSON($('#jsoninput').val());
 	putCookie(JSON.stringify([].concat.apply([], data.semesters.map(function (x) { return x["classes"]; })).filter(function (x) { return x["transcript"] != null; }).map(function (x) { var a = {}; a[x.course_code] = x.transcript[0].grade; return a; } ).reduce(function (a, b) { return $.extend(a, b); } )));
     stop();
 }
@@ -31,7 +31,7 @@ function getCookie() {
 }
 
 function updateMultivarLr(target_class) {
-    var user_classes = getCookie()
+    var user_classes = getCookie();
     return $.getJSON('/models/' + target_class + '/x', function(data) {
         var all_classes = keys(data);
         var stdev = data.stdev;
@@ -50,7 +50,7 @@ function updateMultivarLr(target_class) {
         value += bias;
         console.log(value);
     
-    })
+    });
 }
 
 
