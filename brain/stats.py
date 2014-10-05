@@ -1,3 +1,6 @@
+import scipy
+import numpy
+from sklearn import linear_model
 def covariance(samples):
     """ Gets the covariance of grades """
     xs, ys = list(map(lambda a: a[0], samples)), list(map(lambda a: a[1], samples))
@@ -27,3 +30,20 @@ def simple_lr(samples):
     b = bnum / bdenom
     a = avgy - b * avgx
     return (b, a)
+def multivariate_lr(x, y):
+    """Returns linear regression coefficients (a0, a1, a2, x3 ... an)
+        where y = a0 + a1*x1 + a2*x2 + a3*x3 ... an * xn
+        x :: [[x1, x2, x3 ... xn], ... xk]
+        y :: [y0, y1 ... yk]
+
+        Note, len(x) == len(y), otherwise exception raised
+    """
+    clf = linear_model.LinearRegression()
+    clf.fit(x,y)
+    coeff = []
+    coeff.append(clf.intercept_)
+    coeff += list(clf.coef_)
+    return coeff
+
+
+
