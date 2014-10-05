@@ -32,18 +32,15 @@ def import_data(data):
 
 def student_had_class(student, classStr):
     """ Check if student took a class """
-    for c in student:
-        if c["class"] == classStr:
-            return True
-    return False
+    return classStr in student
 
 def get_student_grade(student, classStr):
     """ Find letter grade that a student got in a class """
-    return filter(lambda c: c["class"] == classStr, student)[0]["grade"]
+    return student[classStr]
 
 def histogram(dataset, class1, class2):
     """ Given data and two classes, return a dict of dicts that returns how many people that got a certain grade in one class got a grade in the second class """
-    studentsThatTookClass = filter(lambda student: class1 in student and class2 in student, dataset)
+    studentsThatTookClass = filter(lambda student: student_had_class(student, class1) and student_had_class(student, class2), dataset)
     hist = {}
     for g in grades:
         hist[g] = dict.fromkeys(grades, 0)
