@@ -1,5 +1,6 @@
 from internal import NotEnoughDataException, grades, grade
 from stats import covariance, simple_lr, multivariate_lr
+from operator import add
 
 def import_data(data):
     """Import from the db.gradebraindb.data mongo collection"""
@@ -84,15 +85,20 @@ def get_multivar_lr(data, class1):
     data -- mongo GRADE data, NOT anything else
     class 1 -- string
     """
-    courses = list(set(map(lambda x: x["class"], reduce(add, data))))
+    gradeData = data[1]
+    courses = list(set(map(lambda x: x["class"], reduce(add, data[0]))))
+    courses.insert(0, "bias")
     all_class_grades = []
     class1_grades = []
-    for student in data:
+    for student in gradeData:
         student_grades = [0] * len(courses)
         if class1 in student:
             for course in student.keys():
                 student_grades[courses.index(course)] = grade(student[course])
             class1_grades.append(grade(student[class1]))
             all_class_grades.append(student_grades)
-    return multivariate_lr(all_class_grades, class1_grades)
-
+    if len(all_class_grades) != 0 and len(class1_grades) != 0:
+        coeffs = multivariate_lr(all_class_grades, class1_grades)
+        return dict(zip(courses, coeffs))
+    else:
+        raise "We don't have enough data to make a conclusion!"

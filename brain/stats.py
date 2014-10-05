@@ -1,7 +1,7 @@
 from internal import *
-#import scipy
-#import numpy
-#from sklearn import linear_model
+import scipy
+import numpy
+from sklearn import linear_model
 
 from math import sqrt
 
