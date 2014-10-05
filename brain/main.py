@@ -1,4 +1,4 @@
-from pymongo import MongoClient
+from pymongo import MongoClient, errors
 from linear_model import *
 from internal import *
 from operator import add
@@ -24,6 +24,7 @@ dataset, gradeset = import_data(data)
 classes = list(set(reduce(add,map(lambda x: x.keys(), gradeset))))
 print(classes)
 
+
 for class1 in classes:
     for class2 in classes:
         print(class1, class2)
@@ -38,11 +39,14 @@ for class1 in classes:
                 model = {"class1": class1, "class2": class2, "model": {"histogram": hist}}
             models.remove({"class1": class1, "class2": class2})
             models.insert(model)
-
+            
 # multivariate regression
 for clazz in classes:
     print(clazz)
-    courses.insert({"name": clazz, "dirty": False})
+    try:
+        courses.insert({"name": clazz, "dirty": False})
+    except errors.DuplicateKeyError:
+        pass
 
     try:
         coeffs = get_multivar_lr((dataset, gradeset), classes[:], clazz)
@@ -50,5 +54,5 @@ for clazz in classes:
         models.remove({"class1": clazz, "class2": ""})
         models.remove({"class1": clazz, "class2": "x"})
         models.insert(model)
-    except NotEnoughDataException:
+    except NotEnoughDataException, DuplicateKeyError:
         pass
