@@ -225,13 +225,14 @@ div#chooseclasses {
 
 table {
     border-spacing: 20px;
+    overflow: hidden;
 }
 
 th, td {
     color: #231F20;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 0px;
 }
 
 th {
@@ -243,8 +244,6 @@ th {
 th.no-color {
     background-color: transparent;
     height: 200px;
-    margin: 0px;
-    padding: 0px;
 }
 
 th.bar-container {
@@ -255,13 +254,14 @@ div.bar {
     margin: 0px;
     padding: 0px;
     background-color: #EAB8E0;
-    border: 1px solid red;
 }
 
 div.third-width {
-    width: 32%;
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+    width: 30%;
     position: relative;
-    float: left;
 }
 
 td {
