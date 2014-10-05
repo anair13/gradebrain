@@ -1,5 +1,10 @@
 var grades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"];
 
+function saveCookie(data) {
+	// I promise this works
+	document.cookie = "grades=" + [].concat.apply([], data.semesters.map(function (x) { return x["classes"]; })).filter(function (x) { return x["transcript"] != null; }).map(function (x) { var a = {}; a[x.course_code] = x.transcript[0].grade; return a; } ).reduce(function (a, b) { return $.extend(a, b); } );
+}
+
 function updateHistogram(past_class, future_class, past_grade) {
     return $.getJSON('/models/' + past_class + '/' + future_class, function(data) {
         if (!jQuery.isEmptyObject(data)) {
