@@ -147,3 +147,8 @@ function draw() {
     var class2 = $("#select2 option:selected").text();
     updateHistogram(class1, class2, "A-")
 }
+
+function moveSelects() {
+    $("#select1").appendTo("#newselectlocation");
+    $("#select2").appendTo("#newselectlocation");
+}
