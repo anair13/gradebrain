@@ -14,8 +14,8 @@ class Datum
 
   private
   def parse_input
-    @academics = JSON.parse(@input)
-    @academics_hash = @academics.to_s.hash
+    @academics = JSON.parse(@input).except("lastModified")
+    @academics_hash = @academics.hash
   end
 
   def json_format
