@@ -2,7 +2,7 @@ Gradebrain::Application.routes.draw do
   resources :linear_models
   get '/models/:class1/:class2', to: 'linear_models#get_model'
 
-  root :to => 'data#index'
+  root :to => 'data#new'
 
   resources :data
 

@@ -1,5 +1,66 @@
-<h1>New datum</h1>
+<div id='background-container'>
+        <%= image_tag("classroom.jpg", :id => 'background-img') %>
+</div>
 
-<%= render 'form' %>
+<div id='background-overlay'>
+</div>
+<div id = "landingwrap">
+    <div id = "landing">
+        <h1 id = "name">GradeSeer</h1>
+        <h2 id = "explanation">GradeSeer predicts grades in future classes,
+        <br /> based on grades in past classes</h2>
+            <span id = "inline-popups"><a class = "nav" href = "#entergrades" data-effect="mfp-move-from-top">Get started</a></span>
+            <a class = "nav" href = "#learnmore">Learn more</a>
+    </div>
+</div>
+<!-- CONTENT -->
+<div id = "learnmore">
+<h1 class = "title">Don't guess, know.</h1>
+<h2  class = "subtitle">GradeSeer aims to demystify the relationships between classes</h2>
+IPhone McSweeney's viral deep v shabby chic, pop-up Pinterest kitsch Etsy pug mustache trust fund Austin. Pinterest readymade XOXO, viral selfies hashtag Wes Anderson. Godard banh mi retro master cleanse post-ironic Blue Bottle American Apparel wolf, scenester +1. Swag sartorial forage, single-origin coffee ethical literally Echo Park leggings locavore. Biodiesel bespoke direct trade Portland, mustache retro vegan letterpress. XOXO heirloom cliche fingerstache. Tote bag art party Pitchfork chillwave.
 
-<%= link_to 'Back', data_path %>
+<h1 class = "title" align = "right">Plan your future</h1>
+<h2 class = "subtitle" align = "right">GradeSeer uses quantitative information to help you plan your schedule</h2>
+Blog kitsch craft beer vinyl Portland plaid pork belly, single-origin coffee XOXO. Trust fund normcore pour-over viral polaroid selfies. Asymmetrical viral vegan, Pitchfork ugh disrupt cardigan. Master cleanse Brooklyn farm-to-table Marfa, organic beard deep v whatever mustache. Mixtape iPhone fashion axe, Cosby sweater Tonx hashtag tilde sartorial locavore Helvetica. Jean shorts aesthetic meggings Portland, YOLO farm-to-table crucifix vinyl. Brooklyn tattooed farm-to-table Bushwick, seitan bespoke trust fund. 
+</div>
+<!-- FOOTER -->
+<div id = "footer">
+    <div id = "copyright">
+        Made by Ashvin Nair, Saavan Patel, Angira Shirahatti, Jason Tu & Roy Tu for CalHacks,  2014
+    </div>
+</div>
+
+<!-- POPUPS -->
+<div id="disclaimer" class="white-popup mfp-with-anim mfp-hide">
+            <div class = "popuplink"><span id = "inline-popups"><a class = "popup" href = "#entergrades" data-effect="mfp-move-from-top">Alright, show me my future</a></span></div>
+    <div class = "popuplink"><a class = "popup" href = "#">No thanks, take me back</a></div>
+
+</div>
+
+<div id="entergrades" class="white-popup mfp-with-anim mfp-hide">
+    <h1 class = "popupheader"> Please enter your grades </h1>
+    Login to <a href = "https://calcentral.berkeley.edu/dashboard" target="_blank">Cal Central</a>, then click on <a href "https://calcentral.berkeley.edu/api/my/academics" target="_blank">this link</a>, and copy & paste your transcript data below.
+    <br />
+    
+    <%= render 'form' %>
+
+    <br />
+    <div id = "disclaimer">Disclaimer: In order to provide you with the best possible predictions, GradeSeer stores all grades entered in its database. We will never keep your name, or any other personal information.</div>
+
+</div>
+
+<script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+<script src='http://dimsemenov-static.s3.amazonaws.com/dist/jquery.magnific-popup.min.js'></script>
+  <script>
+    // Inline popups
+    $('#inline-popups').magnificPopup({
+      delegate: 'a',
+      removalDelay: 500, //delay removal by X to allow out-animation
+      callbacks: {
+        beforeOpen: function() {
+           this.st.mainClass = this.st.el.attr('data-effect');
+        }
+      },
+      midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+    });
+  </script>
