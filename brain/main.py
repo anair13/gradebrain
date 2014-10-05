@@ -4,12 +4,14 @@ from internal import *
 from operator import add
 import os
 
+local_client = MongoClient()
 client = MongoClient('ds043350.mongolab.com', 43350)
 client.gradebraindb.authenticate(
 	os.environ["MONGO_USERNAME"],
 	os.environ["MONGO_PASSWORD"],)
 data = client.gradebraindb.data
 models = client.gradebraindb.linear_models
+#models = local_client.gradebrain_development.linear_models
 
 """
 Write model to the db.gradebraindb.data mongo collection

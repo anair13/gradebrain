@@ -1,6 +1,6 @@
-function updateLinearModel(past_class, future_class) {
+function updateLinearModel(past_class, future_class, past_grade) {
     return $.getJSON('/models/' + past_class + '/' + future_class, function(data) {
-        console.log(data);
+        console.log(data.histogram[past_grade]);
         // do some stuff to modify the page based on the model
     });
 }
