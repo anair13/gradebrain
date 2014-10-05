@@ -166,10 +166,12 @@ function allClasses() {
 function draw() {
     var class1 = $("#select1 option:selected").text();
     var class2 = $("#select2 option:selected").text();
-    updateHistogram(class1, class2, "A-")
+    var grade = $("#select3 option:selected").text();
+    updateHistogram(class1, class2, grade)
 }
 
 function moveSelects() {
+    $("#select3").appendTo("#newselectlocation");
     $("#select1").appendTo("#newselectlocation");
     $("#select2").appendTo("#newselectlocation");
 }
