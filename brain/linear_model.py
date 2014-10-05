@@ -5,8 +5,10 @@ def import_data(data):
     """Import from the db.gradebraindb.data mongo collection"""
     x = data.find()
     grades = []
+    gradeset = []
     for x in data.find():
         person = []
+        student = {}
         if 'semesters' in x['academics']:
             for y in x["academics"]["semesters"]:
                 if type(y) == dict:
@@ -17,15 +19,16 @@ def import_data(data):
                                     temp = { "class" : course["course_code"]}
                                     temp.update(*course["transcript"])
                                     person.append(temp)
-                            
+                                    student[course["course_code"]] = course["transcript"][0]["grade"]
                     else:
                         raise "Invalid JSON!"
                 else:
                     raise "Invalid JSON!"
         if len(person) > 0:
             grades.append(person)
-    return grades
-    
+            gradeset.append(student)
+    return grades, gradeset
+
 def student_had_class(student, classStr):
     """ Check if student took a class """
     for c in student:
@@ -39,10 +42,12 @@ def get_student_grade(student, classStr):
 
 def histogram(dataset, class1, class2):
     """ Given data and two classes, return a dict of dicts that returns how many people that got a certain grade in one class got a grade in the second class """
-    studentsThatTookClass = filter(lambda student: student_had_class(student, class1) and student_had_class(student, class2), list(dataset))
-    hist = dict.fromkeys(grades, dict.fromkeys(grades, 0))
+    studentsThatTookClass = filter(lambda student: class1 in student and class2 in student, dataset)
+    hist = {}
+    for g in grades:
+        hist[g] = dict.fromkeys(grades, 0)
     for student in studentsThatTookClass:
-        hist[get_student_grade(student, class1)][get_student_grade(student, class2)] += 1
+        hist[student[class1]][student[class2]] += 1
     return hist
 
 def get_lr_samples(data, class1, class2):

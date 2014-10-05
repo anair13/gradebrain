@@ -2,6 +2,7 @@ from pymongo import MongoClient
 from linear_model import *
 from internal import *
 from operator import add
+from stats import *
 import os
 
 local_client = MongoClient()
@@ -19,19 +20,22 @@ class1, class2 are the course code strings, class1 < class2
 linear_model is (b,a) for f = bx + a
 """
 
-dataset = import_data(data)
-classes = list(set(map(lambda x: x["class"], reduce(add, dataset))))
+dataset, gradeset = import_data(data)
+classes = list(set(reduce(add,map(lambda x: x.keys(), gradeset))))
 
 for class1 in classes:
     for class2 in classes:
+        print(class1, class2)
         if class1 != class2:
+            hist = histogram(gradeset, class1, class2)
+            if (class1 == "COMPSCI 61A" and class2 == "COMPSCI 61B"):
+                print(hist)
             try:
                 lm = get_lr_classes(dataset, class1, class2)
-                hist = histogram(dataset, "COMPSCI 61A", "COMPSCI 61B")
+                se = stdev(get_lr_samples(dataset, class1, class2))
                 model = {"class1": class1, "class2": class2,
-                    "model": {"t0": lm[1], "t1": lm[0], "histogram": hist}}
+                    "model": {"t0": lm[1], "t1": lm[0], "se": se, "histogram": hist}}
             except NotEnoughDataException:
-                hist = histogram(dataset, "COMPSCI 61A", "COMPSCI 61B")
                 model = {"class1": class1, "class2": class2, "model": {"histogram": hist}}
             models.remove({"class1": class1, "class2": class2})
             models.insert(model)
