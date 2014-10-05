@@ -1,6 +1,5 @@
 
 function updateLinearModel(past_class, future_class, past_grade) {
-    alert("testtest");
     return $.getJSON('/models/' + past_class + '/' + future_class, function(data) {
 	var grades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"];
 	var gradehist = [];
@@ -40,7 +39,7 @@ function histogram(values) {
         .scale(x)
         .orient("bottom");
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#canvas").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")

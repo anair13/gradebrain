@@ -12,6 +12,7 @@ client.gradebraindb.authenticate(
 	os.environ["MONGO_PASSWORD"],)
 data = client.gradebraindb.data
 models = client.gradebraindb.linear_models
+courses = client.gradebraindb.courses
 #models = local_client.gradebrain_development.linear_models
 
 """
@@ -41,6 +42,8 @@ for class1 in classes:
 # multivariate regression
 for clazz in classes:
     print(clazz)
+    courses.insert({"name": clazz, "dirty": False})
+
     try:
         coeffs = get_multivar_lr((dataset, gradeset), classes[:], clazz)
         model = {"class1": clazz, "class2": "x", "model": coeffs}
